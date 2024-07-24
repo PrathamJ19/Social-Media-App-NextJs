@@ -1,5 +1,3 @@
-// index.js
-
 const fs = require('fs');
 const path = require('path');
 require('dotenv').config();
@@ -12,15 +10,6 @@ const cors = require('cors');
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
-
-// Ensure uploads directory exists
-const uploadsDir = path.join(__dirname, 'uploads');
-if (!fs.existsSync(uploadsDir)) {
-  fs.mkdirSync(uploadsDir);
-}
-
-// Serve static files from the 'uploads' directory
-app.use('/uploads', express.static(uploadsDir));
 
 // Connect to MongoDB
 const mongoURI = process.env.MONGO_URI;
@@ -38,6 +27,8 @@ mongoose.connect(mongoURI, {
 const authRoutes = require('./routes/auth');
 app.use('/api/auth', authRoutes);
 
+const postRoutes = require('./routes/auth');
+app.use('/api/posts', postRoutes);
 
 // Start the server
 const PORT = process.env.PORT || 5000;

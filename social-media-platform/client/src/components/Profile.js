@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
+const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
+
 const Profile = () => {
   const { username } = useParams();
   const [profileData, setProfileData] = useState({
@@ -23,7 +25,7 @@ const Profile = () => {
 
     const fetchProfileData = async () => {
       try {
-        const res = await axios.get(`http://localhost:5000/api/auth/profile/${username}`, {
+        const res = await axios.get(`${apiBaseUrl}/auth/profile/${username}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -39,7 +41,7 @@ const Profile = () => {
           setIsCurrentUser(currentUser === username);
 
           // Check if current user is following this profile
-          const followingRes = await axios.get(`http://localhost:5000/api/auth/is-following/${username}`, {
+          const followingRes = await axios.get(`${apiBaseUrl}/auth/is-following/${username}`, {
             headers: {
               Authorization: `Bearer ${token}`,
             },
@@ -57,7 +59,7 @@ const Profile = () => {
 
   const handleFollow = async () => {
     try {
-      await axios.post(`http://localhost:5000/api/auth/follow/${username}`, null, {
+      await axios.post(`${apiBaseUrl}/auth/follow/${username}`, null, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -72,7 +74,7 @@ const Profile = () => {
 
   const handleUnfollow = async () => {
     try {
-      await axios.post(`http://localhost:5000/api/auth/unfollow/${username}`, null, {
+      await axios.post(`${apiBaseUrl}/auth/unfollow/${username}`, null, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -93,7 +95,7 @@ const Profile = () => {
         <p>The person you searched for does not exist.</p>
       ) : (
         <>
-          <img src={`http://localhost:5000/${profileData.profilePicture}`} alt="Profile" style={{ width: '100px', height: '100px' }} />
+          <img src={profileData.profilePicture} alt="Profile" style={{ width: '100px', height: '100px' }} />
           <h2>{username}</h2>
           <div>
             <span>Followers: {profileData.followers}</span>

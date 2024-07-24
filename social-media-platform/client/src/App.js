@@ -6,6 +6,8 @@ import Signup from './components/Signup';
 import Login from './components/Login';
 import Home from './components/Home';
 import Profile from './components/Profile'; // Import Profile component
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 function App() {
   return (

@@ -4,6 +4,9 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
+
+const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
+
 const Signup = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -35,7 +38,7 @@ const Signup = () => {
     }
 
     try {
-      const res = await axios.post('http://localhost:5000/api/auth/signup', data);
+      const res = await axios.post(`${apiBaseUrl}/auth/signup`, data);
       console.log(res.data);
 
       const { username, token } = res.data;
