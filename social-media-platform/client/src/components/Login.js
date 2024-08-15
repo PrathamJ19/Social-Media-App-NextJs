@@ -3,8 +3,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { apiBaseUrl } from '../constants';
 
-const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
+
 
 const Login = () => {
   const navigate = useNavigate();
@@ -29,7 +30,13 @@ const Login = () => {
 
       navigate('/home');
     } catch (err) {
-      console.error(err.response.data);
+      if (err.response && err.response.data) {
+        console.error('Error response:', err.response.data);
+        alert(err.response.data.message); // Display the error message
+      } else {
+        console.error('Error:', err);
+        alert('An error occurred. Please try again.');
+      }
     }
   };
 

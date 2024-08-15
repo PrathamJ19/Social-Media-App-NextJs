@@ -3,8 +3,6 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const multer = require('multer');
 const multerS3 = require('multer-s3');
-const { uploadToS3 } = require('../s3-utils');
-const Post = require('../models/Post'); 
 const User = require('../models/User');
 const authMiddleware = require('../middleware/authMiddleware');
 const s3 = require('../aws-config'); // Import the configured S3 instance
@@ -24,44 +22,51 @@ const upload = multer({
 });
 
 router.post('/signup', upload.single('profilePicture'), async (req, res) => {
-  const { username, email, password } = req.body;
-  let profilePicture = 'default-profile-pic.jpg';
+  const { username, email, password, confirmPassword } = req.body;
+  let profilePicture = 'https://faizawsbucket.s3.amazonaws.com/default-profile-pic.jpg';
+
+  if (password !== confirmPassword) {
+      return res.status(400).json({ message: 'Passwords do not match' });
+  }
 
   if (req.file) {
-    try {
-      profilePicture = req.file.location; // Get the location of the uploaded file
-    } catch (err) {
-      return res.status(500).json({ message: 'Error uploading profile picture to S3' });
-    }
+      try {
+          profilePicture = req.file.location;
+      } catch (err) {
+          return res.status(500).json({ message: 'Error uploading profile picture to S3' });
+      }
   }
 
   try {
-    const hashedPassword = await bcrypt.hash(password, 10); // Hash the password before saving
-    const newUser = new User({ username, email, password: hashedPassword, profilePicture });
-    await newUser.save();
-    const token = jwt.sign({ id: newUser._id }, SECRET_KEY, { expiresIn: '1h' });
-    res.status(201).json({ username: newUser.username, token });
+      const newUser = new User({ username, email, password, profilePicture });
+      await newUser.save();
+      const token = jwt.sign({ id: newUser._id }, SECRET_KEY, { expiresIn: '1d' });
+      res.status(201).json({ username: newUser.username, token });
   } catch (err) {
-    res.status(400).json({ message: err.message });
+      res.status(400).json({ message: err.message });
   }
 });
+
+
 
 router.post('/login', async (req, res) => {
   const { email, password } = req.body;
   try {
-    const user = await User.findOne({ email });
-    if (!user) return res.status(400).json({ message: 'User not found' });
+      const user = await User.findOne({ email });
+      if (!user) return res.status(400).json({ message: 'User not found' });
 
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) return res.status(400).json({ message: 'Invalid credentials' });
+      const isMatch = await bcrypt.compare(password, user.password);
 
-    const token = jwt.sign({ id: user._id }, SECRET_KEY, { expiresIn: '1h' });
-    res.json({ message: 'Login successful', username: user.username, token });
+      if (!isMatch) return res.status(400).json({ message: 'Invalid password. Please check again.' });
+
+      const token = jwt.sign({ id: user._id }, SECRET_KEY, { expiresIn: '1d' });
+      res.json({ message: 'Login successful', username: user.username, token });
   } catch (err) {
-    res.status(500).json({ message: err.message });
+      res.status(500).json({ message: err.message });
   }
 });
 
+  
 router.get('/profile/:username', authMiddleware, async (req, res) => {
   const { username } = req.params;
   try {
@@ -135,7 +140,7 @@ router.post('/unfollow/:username', authMiddleware, async (req, res) => {
     await userToUnfollow.save();
 
     const currentUserDoc = await User.findById(currentUser);
-    currentUserDoc.following = currentUserDoc.following.filter(following => following.toString() !== userToUnfollow._id);
+    currentUserDoc.following = currentUserDoc.following.filter(following => following.toString() !== userToUnfollow._id.toString());
     await currentUserDoc.save();
 
     res.status(200).json({ message: 'Unfollowed user', username });
@@ -144,93 +149,28 @@ router.post('/unfollow/:username', authMiddleware, async (req, res) => {
   }
 });
 
-
-router.post('/create', authMiddleware, upload.array('images', 3), async (req, res) => {
-    console.log('Request received:', req.body, req.files); // Log the request body and files
-
-    const { content } = req.body;
-    let images = [];
-
-    if (req.files && req.files.length > 0) {
-        try {
-            images = req.files.map(file => file.location); // Use the S3 URL directly
-            console.log('Images uploaded to S3:', images); // Log the uploaded images URLs
-        } catch (err) {
-            console.error('Error uploading images to S3:', err); // Log the error
-            return res.status(500).json({ message: 'Error uploading images to S3' });
-        }
-    }
-
-    try {
-        const newPost = new Post({
-            author: req.user.id,
-            content,
-            images,
-        });
-        await newPost.save();
-        console.log('Post created successfully:', newPost); // Log the newly created post
-        res.status(201).json(newPost);
-    } catch (err) {
-        console.error('Error creating post:', err); // Log the error
-        res.status(500).json({ message: err.message });
-    }
-});
-
-
-  
-
-router.get('/', authMiddleware, async (req, res) => {
-  try {
-    const posts = await Post.find().populate('author', 'username profilePicture').sort({ createdAt: -1 });
-    res.status(200).json(posts);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-});
-
-router.post('/like/:postId', authMiddleware, async (req, res) => {
-  try {
-    const post = await Post.findById(req.params.postId);
-    if (!post) return res.status(404).json({ message: 'Post not found' });
-
-    const currentUsername = req.user.username;
-
-    if (post.likes.includes(currentUsername)) {
-      return res.status(400).json({ message: 'You have already liked this post' });
-    }
-
-    post.likes.push(currentUsername);
-    await post.save();
-    res.status(200).json(post);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-});
-
-router.post('/unlike/:postId', authMiddleware, async (req, res) => {
-  try {
-    const post = await Post.findById(req.params.postId);
-    if (!post) return res.status(404).json({ message: 'Post not found' });
-
-    const currentUsername = req.user.username;
-
-    if (!post.likes.includes(currentUsername)) {
-      return res.status(400).json({ message: 'You have not liked this post' });
-    }
-
-    post.likes = post.likes.filter(username => username !== currentUsername);
-    await post.save();
-    res.status(200).json(post);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-});
-
 router.get('/user', authMiddleware, async (req, res) => {
   try {
     const user = await User.findById(req.user.id);
     if (!user) return res.status(404).json({ message: 'User not found' });
     res.json({ username: user.username });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+router.get('/following/:username', authMiddleware, async (req, res) => {
+  const { username } = req.params;
+  try {
+    // Find the current user
+    const currentUser = await User.findOne({ username }).populate('following', 'username profilePicture').exec();
+    if (!currentUser) return res.status(404).json({ message: 'User not found' });
+
+    // Get the list of users the current user is following
+    const followingUsers = currentUser.following;
+    
+    // Send only the top 10 users or fewer if there are less than 10
+    res.json(followingUsers.slice(0, 10));
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

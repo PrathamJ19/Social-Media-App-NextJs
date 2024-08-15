@@ -25,10 +25,12 @@ mongoose.connect(mongoURI, {
 
 // Import and use routes
 const authRoutes = require('./routes/auth');
-app.use('/api/auth', authRoutes);
+const postRoutes = require('./routes/posts');  // Correctly import the posts route
+const searchRoutes = require('./routes/search');  // Add this line
 
-const postRoutes = require('./routes/auth');
-app.use('/api/posts', postRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/posts', postRoutes);  // Correctly use the posts route
+app.use('/api/search', searchRoutes);  // Add this line
 
 // Start the server
 const PORT = process.env.PORT || 5000;

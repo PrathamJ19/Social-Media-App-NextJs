@@ -1,11 +1,8 @@
-// client/src/components/Signup.js
-
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-
-
-const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
+import { apiBaseUrl } from '../constants';
+import '../styles/Signup.css'; // Import the CSS file
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -13,11 +10,12 @@ const Signup = () => {
     username: '',
     email: '',
     password: '',
+    confirmPassword: '',
     profilePicture: null,
   });
   const [error, setError] = useState('');
 
-  const { username, email, password, profilePicture } = formData;
+  const { username, email, password, confirmPassword, profilePicture } = formData;
 
   const onChange = (e) => {
     if (e.target.name === 'profilePicture') {
@@ -33,6 +31,7 @@ const Signup = () => {
     data.append('username', username);
     data.append('email', email);
     data.append('password', password);
+    data.append('confirmPassword', confirmPassword); // Add confirmPassword to the form data
     if (profilePicture) {
       data.append('profilePicture', profilePicture);
     }
@@ -53,8 +52,8 @@ const Signup = () => {
   };
 
   return (
-    <div>
-      <form onSubmit={onSubmit}>
+    <div className="signup-container">
+      <form className="signup-form" onSubmit={onSubmit}>
         <div>
           <label>Username:</label>
           <input type="text" name="username" value={username} onChange={onChange} required />
@@ -68,12 +67,16 @@ const Signup = () => {
           <input type="password" name="password" value={password} onChange={onChange} required />
         </div>
         <div>
+          <label>Confirm Password:</label>
+          <input type="password" name="confirmPassword" value={confirmPassword} onChange={onChange} required />
+        </div>
+        <div>
           <label>Profile Picture:</label>
           <input type="file" name="profilePicture" onChange={onChange} />
         </div>
         <button type="submit">Sign Up</button>
+        {error && <p>{error}</p>}
       </form>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
     </div>
   );
 };

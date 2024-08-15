@@ -1,4 +1,4 @@
-// server/models/User.js
+//server/models/User.js
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 
@@ -11,6 +11,7 @@ const userSchema = new mongoose.Schema({
   following: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
 });
 
+// Ensure password is hashed before saving
 userSchema.pre('save', async function (next) {
   if (!this.isModified('password')) return next();
   const salt = await bcrypt.genSalt(10);

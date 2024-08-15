@@ -1,0 +1,27 @@
+/* client/src/styles/NotificationFollowed.css */
+
+.notification-followed {
+    position: fixed;
+    bottom: 20px; /* Adjust the distance from the bottom */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #333;
+    color: #fff;
+    padding: 10px 20px; /* Adjust padding for better appearance */
+    border-radius: 5px;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+  }
+  
+  .notification-close-button {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 20px;
+    margin-left: 15px;
+    cursor: pointer;
+  }
+  
