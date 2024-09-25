@@ -15,13 +15,15 @@ const useHomeLogic = () => {
   const [loading, setLoading] = useState(true); // Add loading state
 
   useEffect(() => {
-    if (!token) {
+    const storedToken = localStorage.getItem('token');
+    
+    if (!storedToken) {
       alert('Please log in first.');
       navigate('/login');
     } else {
       fetchPosts();
     }
-  }, [token, navigate]);
+  }, [navigate]);
 
   const fetchPosts = async () => {
     try {

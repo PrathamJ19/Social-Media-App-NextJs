@@ -18,21 +18,28 @@ const Login = () => {
 
   const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
 
-  const onSubmit = async e => {
+  const onSubmit = async (e) => {
     e.preventDefault();
     try {
       const res = await axios.post(`${apiBaseUrl}/auth/login`, formData);
       console.log(res.data);
-
+  
       const { username, token } = res.data;
+      
+      // Set the token and username in localStorage first
       localStorage.setItem('token', token);
       localStorage.setItem('username', username);
-
-      navigate('/home');
+      
+      // Ensure that token is set before navigating
+      if (localStorage.getItem('token')) {
+        navigate('/home');
+      } else {
+        alert("Failed to set token. Please try again.");
+      }
     } catch (err) {
       if (err.response && err.response.data) {
         console.error('Error response:', err.response.data);
-        alert(err.response.data.message); // Display the error message
+        alert(err.response.data.message);
       } else {
         console.error('Error:', err);
         alert('An error occurred. Please try again.');
