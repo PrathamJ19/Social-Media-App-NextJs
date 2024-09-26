@@ -82,41 +82,44 @@
     background-color: #0056b3;
   }
   
-  /* Notification styles */
-  .notification {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #333;
-    color: #fff;
-    padding: 10px 20px;
-    border-radius: 5px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 1000;
-  }
-  
-  .notification p {
-    margin: 0;
-  }
-  
-  .confirmation-dialog {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: white;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-    z-index: 1000;
-  }
-  
-  .confirmation-dialog button {
-    margin: 0 5px;
-  }
+ /* Notification styles */
+/* Confirmation modal styles */
+.confirmation-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1001;
+}
+
+.confirmation-modal {
+  background: white;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  z-index: 1002;
+}
+
+.confirmation-modal button {
+  margin: 5px;
+  padding: 10px 20px;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.confirmation-modal button:hover {
+  background-color: #0056b3;
+}
+
   
   /* Ensure the posts are placed below the user details */
   .user-posts {

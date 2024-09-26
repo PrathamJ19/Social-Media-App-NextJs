@@ -7,7 +7,7 @@ import Profile from './components/Profile';
 import PostPage from './components/PostPage'; 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-function App() {
+const App: React.FC = () => {
   return (
     <Router>
       <Routes>
