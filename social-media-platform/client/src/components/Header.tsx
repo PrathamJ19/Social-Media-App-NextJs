@@ -1,7 +1,7 @@
 // client/src/components/Header.tsx
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import SearchBar from './Sidebar';
+import SearchBar from './SearchBar';
 import '../styles/Header.css'; // Import the CSS file for styling
 
 // Define the types for the props
