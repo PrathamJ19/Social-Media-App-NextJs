@@ -1,0 +1,195 @@
+/* General styles remain unchanged */
+.postPageContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 100px;
+  margin-left: 280px;
+  margin-right: 280px;
+}
+
+.postCard {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.postHeader {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.profilePicture {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.postAuthor {
+  font-weight: bold;
+}
+
+.postContent {
+  margin-bottom: 15px;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.postCarousel {
+  margin-bottom: 15px;
+}
+
+.postImage {
+  width: 100%;
+  max-height: 500px;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.likeButton {
+  background: none; /* Remove background */
+  border: none; /* Remove border */
+  cursor: pointer;
+  padding: 0;
+  font-size: 24px; /* Adjust font size to make the icon larger */
+  color: #ff0000; /* Red color for the heart icon */
+}
+
+.postActions {
+  display: flex;
+  align-items: center;
+  gap: 3px; /* Add some space between the button and the count */
+}
+
+.commentsSection {
+  width: 100%;
+  margin-top: 20px;
+}
+
+.commentForm {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.commentForm textarea {
+  width: 100%;
+  height: 80px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+  resize: vertical;
+  margin-bottom: 10px;
+}
+
+.commentForm button {
+  align-self: flex-end;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.commentsList {
+  margin-top: 20px;
+}
+
+.commentHeader {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.commentProfilePicture {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.commentUsername {
+  font-weight: bold;
+  padding-right: 5px;
+  cursor: pointer;
+}
+
+.commentDate {
+  font-size: 12px;
+  color: #555;
+}
+
+.commentContent {
+  margin-top: 5px;
+  font-size: 14px;
+}
+
+.comment {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.errorMessage {
+  color: #dc3545;
+  margin-bottom: 20px;
+}
+
+/* Mobile-specific styles */
+@media (max-width: 768px) {
+  .postPageContainer {
+    margin-left: 0;
+    margin-right: 0;
+    padding: 20px; /* Add some padding for smaller screens */
+    margin-top: 70px;
+  }
+
+  .postCard {
+    width: 100%;
+    padding: 15px; /* Adjust padding for smaller screens */
+  }
+
+  .postContent {
+    font-size: 14px;
+  }
+
+  .commentsSection {
+    margin-top: 10px;
+  }
+
+  .commentForm textarea {
+    height: 60px; /* Reduce textarea height on smaller screens */
+  }
+
+  .commentForm button {
+    font-size: 12px;
+  }
+
+  .sidebar,
+  .rightSidebar {
+    display: none; /* Hide sidebars on mobile */
+  }
+
+  .profilePicture {
+    width: 40px;
+    height: 40px;
+  }
+
+  .commentProfilePicture {
+    width: 25px;
+    height: 25px;
+  }
+
+  .likeButton {
+    font-size: 20px; /* Adjust button size */
+  }
+}
