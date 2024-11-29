@@ -1,6 +1,4 @@
-/* client/src/styles/Signup.css */
-
-.signup-container {
+.signupContainer {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -8,7 +6,7 @@
   background-color: #f4f4f9;
 }
 
-.signup-form {
+.signupForm {
   background-color: #fff;
   padding: 20px;
   border-radius: 8px;
@@ -17,20 +15,20 @@
   max-width: 400px;
 }
 
-.signup-form div {
+.signupForm div {
   margin-bottom: 15px;
 }
 
-.signup-form label {
+.signupForm label {
   display: block;
   font-weight: bold;
   margin-bottom: 5px;
 }
 
-.signup-form input[type="text"],
-.signup-form input[type="email"],
-.signup-form input[type="password"],
-.signup-form input[type="file"] {
+.signupForm input[type="text"],
+.signupForm input[type="email"],
+.signupForm input[type="password"],
+.signupForm input[type="file"] {
   width: 100%;
   padding: 10px;
   border: 1px solid #ccc;
@@ -38,11 +36,11 @@
   box-sizing: border-box;
 }
 
-.signup-form input[type="file"] {
+.signupForm input[type="file"] {
   padding: 3px;
 }
 
-.signup-form button {
+.signupForm button {
   width: 100%;
   padding: 10px;
   background-color: #007bff;
@@ -53,11 +51,11 @@
   font-size: 16px;
 }
 
-.signup-form button:hover {
+.signupForm button:hover {
   background-color: #0056b3;
 }
 
-.signup-form p {
+.signupForm p {
   color: red;
   font-size: 14px;
   margin-top: 10px;

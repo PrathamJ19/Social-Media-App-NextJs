@@ -1,6 +1,10 @@
+// app/layout.tsx
+
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import "./styles/globals.css";
+import "./styles/globals.css"; // Import your global CSS (corrected path)
+import "stream-chat-react/dist/css/v2/index.css"; // Import Stream Chat CSS
+// Note: Adjust the import path based on the version of stream-chat-react you're using
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",

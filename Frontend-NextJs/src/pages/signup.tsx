@@ -1,10 +1,8 @@
-// client/src/components/Signup.tsx
-
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/router';
 import { apiBaseUrl } from '../constants';
-import '../styles/Signup.css'; // Import the CSS file
+import styles from '../styles/Signup.module.css';
 
 interface FormData {
   username: string;
@@ -15,7 +13,7 @@ interface FormData {
 }
 
 const Signup: React.FC = () => {
-  const navigate = useNavigate();
+  const router = useRouter();
   const [formData, setFormData] = useState<FormData>({
     username: '',
     email: '',
@@ -41,7 +39,7 @@ const Signup: React.FC = () => {
     data.append('username', username);
     data.append('email', email);
     data.append('password', password);
-    data.append('confirmPassword', confirmPassword); // Add confirmPassword to the form data
+    data.append('confirmPassword', confirmPassword);
     if (profilePicture) {
       data.append('profilePicture', profilePicture);
     }
@@ -54,7 +52,7 @@ const Signup: React.FC = () => {
       localStorage.setItem('token', token);
       localStorage.setItem('username', username);
 
-      navigate('/home');
+      router.push('/home');
     } catch (err: any) {
       console.error(err.response.data);
       setError(err.response.data.message);
@@ -62,8 +60,8 @@ const Signup: React.FC = () => {
   };
 
   return (
-    <div className="signup-container">
-      <form className="signup-form" onSubmit={onSubmit}>
+    <div className={styles.signupContainer}>
+      <form className={styles.signupForm} onSubmit={onSubmit}>
         <div>
           <label>Username:</label>
           <input type="text" name="username" value={username} onChange={onChange} required />

@@ -27,10 +27,12 @@ mongoose.connect(mongoURI, {
 const authRoutes = require('./routes/auth');
 const postRoutes = require('./routes/posts');  // Correctly import the posts route
 const searchRoutes = require('./routes/search');  // Add this line
+const chatRoutes = require('./routes/chat');
 
 app.use('/api/auth', authRoutes);
 app.use('/api/posts', postRoutes);  // Correctly use the posts route
 app.use('/api/search', searchRoutes);  // Add this line
+app.use('/api/chat', chatRoutes);
 
 // Start the server
 const PORT = process.env.PORT || 5000;
