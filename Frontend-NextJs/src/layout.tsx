@@ -1,10 +1,8 @@
 // app/layout.tsx
-
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import "./styles/globals.css"; // Import your global CSS (corrected path)
-import "stream-chat-react/dist/css/v2/index.css"; // Import Stream Chat CSS
-// Note: Adjust the import path based on the version of stream-chat-react you're using
+import "./styles/globals.css"; 
+import { Providers } from "./components/Provider"; // Adjusted path
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -30,7 +28,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        {children}
+        <Providers>
+          {children}
+        </Providers>
       </body>
     </html>
   );

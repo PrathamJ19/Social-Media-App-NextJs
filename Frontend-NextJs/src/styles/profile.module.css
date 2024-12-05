@@ -75,6 +75,7 @@
   color: white;
   cursor: pointer;
   width: 250px;
+  margin-right: 35px;
   margin-bottom: 10px; /* Space between button and notification */
 }
 
@@ -182,68 +183,117 @@
 
 @media (max-width: 768px) {
   .profileContainer {
+    display: flex;
     flex-direction: column;
-    align-items: center;
+    gap: 10px;
+    width: 100%;
   }
 
-  .profileContent {
+  .profileHeader {
     display: flex;
-    align-items: flex-start; /* Align items at the start of the container */
+    flex-direction: row;
+    align-items: flex-start;
     gap: 20px;
     width: 100%;
-    flex-wrap: wrap;
+    padding: 10px;
   }
 
   .profilePictureContainer {
-    width: 100%;
+    display: flex;
+    flex-direction: column;
     align-items: flex-start;
-    padding: 0 20px;
-    text-align: center;
   }
 
   .profilePicture2 {
     width: 80px;
     height: 80px;
-    margin-left: 0px;
+    border-radius: 50%;
+    margin-left: 10px;
   }
 
   .username2 {
-    font-size: 20px;
-    margin-left: 0px;
-    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 5px;
+    margin-left: 20px;
+  }
+
+  .profileInfo {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 50px;
+    margin-top: 10px;
+    font-size: large;
+    font-weight: bold;
   }
 
   .profileStats {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 5px;
+  }
+
+  .profileStats div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     gap: 10px;
-    margin-left: 0px;
+    font-size: 14px;
   }
 
   .followButton {
+    margin-top: 10px;
+    padding: 8px 16px;
     font-size: 14px;
-    width: 100px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 10px;
+    width: 100%;
+  }
+
+  .followButton:hover {
+    background-color: #0056b3;
   }
 
   .userPosts {
-    margin: 0;
-    padding: 10px;
+    width: 100%;
+    grid-column: 1 / -1; /* Span across the entire width */
+    margin-top: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
   }
 
   .postCard {
-    padding: 8px;
-    min-width: 100%;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #fff;
+    margin-right: 0;
   }
 
   .postImage {
-    height: 300px;
+    width: 100%;
+    height: auto;
+    margin-top: 10px;
+    border-radius: 5px;
+  }
+
+  .postActions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    font-size: 14px;
   }
 
   .likeIcon {
     font-size: 20px;
-  }
-
-  /* Hide sidebars */
-  .sidebar,
-  .rightSidebar {
-    display: none;
+    cursor: pointer;
   }
 }

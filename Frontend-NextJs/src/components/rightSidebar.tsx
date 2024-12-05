@@ -1,45 +1,18 @@
-import React, { useEffect, useState } from 'react';
-import Link from 'next/link'; // Import Next.js Link
-import styles from '../styles/rightSidebar.module.css'; 
-import axios from 'axios';
-import { apiBaseUrl, token } from '../constants';
+'use client';
 
-interface User {
-  username: string;
-  profilePicture: string;
-}
+import React from 'react';
+import Link from 'next/link';
+import styles from '../styles/rightSidebar.module.css';
+import { useFollowContext } from '../context/FollowContext';
 
 const RightSidebar: React.FC = () => {
-  const [users, setUsers] = useState<User[]>([]);
-  const [error, setError] = useState<string>('');
-
-  useEffect(() => {
-    const fetchUsers = async () => {
-      const storedUsername = localStorage.getItem('username');
-      if (storedUsername) {
-        try {
-          const response = await axios.get(`${apiBaseUrl}/auth/following/${storedUsername}`, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          });
-          setUsers(response.data);
-        } catch (error) {
-          console.error('Error fetching following users:', error);
-          setError('Error fetching following users');
-        }
-      }
-    };
-
-    fetchUsers();
-  }, []);
+  const { followedUsers } = useFollowContext();
 
   return (
     <div className={styles['right-sidebar']}>
-      {error && <p>{error}</p>}
       <h3>Following</h3>
       <div className={styles['user-list']}>
-        {users.map((user) => (
+        {followedUsers.map((user) => (
           <div key={user.username} className={styles['user-item']}>
             <Link href={`/profile/${user.username}`} className={styles['user-link']}>
               <img
@@ -53,7 +26,6 @@ const RightSidebar: React.FC = () => {
         ))}
       </div>
     </div>
-
   );
 };
 

@@ -66,6 +66,61 @@ router.get('/:postId', authMiddleware, async (req, res) => {
 });
 
 
+router.put('/:postId', authMiddleware, upload.array('images', 3), async (req, res) => {
+  const { content, removedImages } = req.body;
+  let images = [];
+
+  // Add newly uploaded images
+  if (req.files && req.files.length > 0) {
+    images = req.files.map((file) => file.location);
+  }
+
+  try {
+    const post = await Post.findById(req.params.postId);
+    if (!post) return res.status(404).json({ message: 'Post not found' });
+
+    if (post.author.toString() !== req.user.id) {
+      return res.status(403).json({ message: 'Unauthorized' });
+    }
+
+    // Update content
+    post.content = content || post.content;
+
+    // Remove specified images
+    if (removedImages && removedImages.length > 0) {
+      const removedImagesArray = Array.isArray(removedImages) ? removedImages : [removedImages];
+      post.images = post.images.filter((image) => !removedImagesArray.includes(image));
+    }
+
+    // Add new images to the existing list
+    post.images = [...post.images, ...images];
+
+    await post.save();
+    res.status(200).json(post);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+
+router.delete('/:postId', authMiddleware, async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.postId);
+    if (!post) return res.status(404).json({ message: 'Post not found' });
+
+    if (post.author.toString() !== req.user.id) {
+      return res.status(403).json({ message: 'Unauthorized' });
+    }
+
+    await Post.findByIdAndDelete(req.params.postId);
+    res.status(200).json({ message: 'Post deleted successfully' });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+
+
 router.post('/like/:postId', authMiddleware, async (req, res) => {
   try {
     const post = await Post.findById(req.params.postId);

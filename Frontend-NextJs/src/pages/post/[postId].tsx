@@ -43,6 +43,9 @@ const PostPage: React.FC = () => {
   const [newComment, setNewComment] = useState('');
   const [error, setError] = useState('');
   const [isMobile, setIsMobile] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [removedImages, setRemovedImages] = useState<string[]>([]);
+
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth <= 768);
@@ -82,6 +85,76 @@ const PostPage: React.FC = () => {
     console.error('Error fetching post:', err);
     setError('Error fetching post');
   }
+};
+
+if (!post) {
+    return <p>Loading post...</p>;
+  }
+
+    const handleEditSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const formData = new FormData();
+    formData.append('content', post?.content || '');
+    post?.images.forEach((image) => {
+      if (image.startsWith('blob:')) {
+        formData.append('images', image); // Add new images
+      }
+    });
+    removedImages.forEach((image) => formData.append('removedImages', image)); // Send removed images
+
+    try {
+      await axios.put(`${apiBaseUrl}/posts/${postId}`, formData, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      // Refetch post after successful edit
+      await fetchPost();
+      alert('Post updated successfully.');
+      setIsEditing(false);
+    } catch (err) {
+      console.error('Error updating post:', err);
+      setError('Error updating post');
+    }
+  };
+
+  const handleDeletePost = async () => {
+    try {
+      await axios.delete(`${apiBaseUrl}/posts/${postId}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      alert('Post deleted successfully.');
+      router.push('/home');
+    } catch (err) {
+      console.error('Error deleting post:', err);
+      setError('Error deleting post');
+    }
+  };
+
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      const newImages = Array.from(e.target.files).slice(0, 3 - post.images.length);
+      const imageUrls = newImages.map((file) => URL.createObjectURL(file));
+
+      setPost((prev) =>
+        prev
+          ? { ...prev, images: [...prev.images, ...imageUrls] }
+          : null
+      );
+    }
+  };
+
+  const handleRemoveImage = (index: number) => {
+  const imageToRemove = post?.images[index];
+  setRemovedImages((prev) => [...prev, imageToRemove]);
+  setPost((prev) =>
+    prev
+      ? {
+          ...prev,
+          images: prev.images.filter((_, i) => i !== index),
+        }
+      : null
+  );
 };
 
 
@@ -161,13 +234,62 @@ const PostPage: React.FC = () => {
         {!isMobile && <Sidebar />}
         <div className={styles.postCard}>
           <div className={styles.postHeader}>
-            <img
-              src={post.author.profilePicture}
-              alt="Profile"
-              className={styles.profilePicture}
-            />
-            <span className={styles.postAuthor}>{post.author.username}</span>
+          <div className={styles.authorContainer}>
+          <img
+            src={post.author.profilePicture}
+            alt="Profile"
+            className={styles.profilePicture}
+          />
+          <span className={styles.postAuthor}>{post.author.username}</span>
           </div>
+          {post.author.username === username && (
+            <button
+              className={styles.editButton}
+              onClick={() => setIsEditing(true)}
+            >
+              Edit
+            </button>
+          )}
+        </div>
+        {isEditing && (
+          <>
+            <div className={styles.modalOverlay} onClick={() => setIsEditing(false)}></div>
+            <div className={styles.editModal}>
+              <form onSubmit={handleEditSubmit}>
+                <textarea
+                  value={post.content}
+                  onChange={(e) =>
+                    setPost((prev) => (prev ? { ...prev, content: e.target.value } : null))
+                  }
+                  placeholder="Edit your post content..."
+                  className={styles.editTextArea}
+                />
+                <div className={styles.imageUploadSection}>
+                  <h4>Images (Max 3)</h4>
+                  <input type="file" accept="image/*" multiple onChange={handleImageUpload} />
+                  <div className={styles.imagePreview}>
+                    {post.images.map((image, index) => (
+                      <div key={index} className={styles.imageContainer}>
+                        <img src={image} alt={`Post image ${index}`} />
+                        <button onClick={() => handleRemoveImage(index)}>✖</button>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                <div style={{ display: "flex", justifyContent: "space-between", gap: "10px" }}>
+                  <button type="submit">Save Changes</button>
+                  <button type="button" onClick={handleDeletePost}>
+                    Delete Post
+                  </button>
+                  <button type="button" onClick={() => setIsEditing(false)}>
+                    Cancel
+                  </button>
+                </div>
+              </form>
+            </div>
+          </>
+        )}
+
           <p className={styles.postContent}>{post.content}</p>
           {post.images.length > 1 ? (
             <Carousel className={styles.postCarousel}>

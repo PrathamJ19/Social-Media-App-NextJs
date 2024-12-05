@@ -20,7 +20,13 @@
 .postHeader {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   margin-bottom: 15px;
+}
+
+.authorContainer {
+  display: flex; /* Keeps profilePicture and postAuthor side by side */
+  align-items: center; /* Vertically aligns the content */
 }
 
 .profilePicture {
@@ -139,9 +145,132 @@
   border-bottom: 1px solid #ddd;
 }
 
+.editButton {
+  color: white;
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 15px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+}
+
+.editButton:hover {
+  background-color: #0056b3;
+}
+
 .errorMessage {
   color: #dc3545;
   margin-bottom: 20px;
+}
+
+.editModal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  width: 90%;
+  max-width: 600px;
+  z-index: 1000;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.editTextArea {
+  width: 100%;
+  height: 100px;
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  resize: none;
+}
+
+.imageUploadSection {
+  margin-top: 15px;
+}
+
+.imageUploadSection h4 {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.imagePreview {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+.imageContainer {
+  position: relative;
+  display: inline-block;
+}
+
+.imageContainer img {
+  width: 80px;
+  height: 80px;
+  border-radius: 5px;
+  object-fit: cover;
+}
+
+.imageContainer button {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  transform: translate(50%, -50%); /* Center the X within the red container */
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  font-size: 12px;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.editModal button {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+.editModal button[type="submit"] {
+  background-color: #007bff;
+  color: white;
+}
+
+.editModal button[type="button"]:not(:last-child) {
+  background-color: #dc3545;
+  color: white;
+}
+
+.editModal button[type="button"]:last-child {
+  background-color: #6c757d;
+  color: white;
+}
+
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
 }
 
 /* Mobile-specific styles */
