@@ -2,7 +2,7 @@
 
 import axios from 'axios';
 import { StreamChat } from 'stream-chat';
-import { apiBaseUrl, token } from '../constants';
+import { apiBaseUrl, token, STREAM_API_KEY } from '../constants';
 
 let chatClient: StreamChat | null = null;
 
@@ -28,7 +28,7 @@ export const initializeChat = async (): Promise<StreamChat> => {
     const { username, profilePicture } = userResponse.data;
 
     // Create a new instance of StreamChat
-    chatClient = new StreamChat(process.env.NEXT_PUBLIC_STREAM_API_KEY!);
+    chatClient = new StreamChat(STREAM_API_KEY);
 
     // Connect the user
     await chatClient.connectUser(
