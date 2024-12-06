@@ -23,6 +23,9 @@
     "stream-chat": "^8.45.2",
     "stream-chat-react": "^12.6.0"
   },
+  "engines": {
+  "node": "16.x"
+},
   "devDependencies": {
     "@types/node": "^20",
     "@types/react": "^18",
