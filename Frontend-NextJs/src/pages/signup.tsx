@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 import { apiBaseUrl } from '../constants';
-import styles from '../styles/Signup.module.css';
+import styles from '../styles/signup.module.css';
 
 interface FormData {
   username: string;
@@ -61,30 +61,78 @@ const Signup: React.FC = () => {
 
   return (
     <div className={styles.signupContainer}>
-      <form className={styles.signupForm} onSubmit={onSubmit}>
-        <div>
-          <label>Username:</label>
-          <input type="text" name="username" value={username} onChange={onChange} required />
+      <div className={styles.signupFormWrapper}>
+        <h1 className={styles.logo}>Link up</h1>
+        <form className={styles.signupForm} onSubmit={onSubmit}>
+          <div className={styles.inputContainer}>
+            <input
+              type="text"
+              name="username"
+              value={username}
+              onChange={onChange}
+              placeholder="Username"
+              className={styles.input}
+              required
+            />
+          </div>
+          <div className={styles.inputContainer}>
+            <input
+              type="email"
+              name="email"
+              value={email}
+              onChange={onChange}
+              placeholder="Email"
+              className={styles.input}
+              required
+            />
+          </div>
+          <div className={styles.inputContainer}>
+            <input
+              type="password"
+              name="password"
+              value={password}
+              onChange={onChange}
+              placeholder="Password"
+              className={styles.input}
+              required
+            />
+          </div>
+          <div className={styles.inputContainer}>
+            <input
+              type="password"
+              name="confirmPassword"
+              value={confirmPassword}
+              onChange={onChange}
+              placeholder="Confirm Password"
+              className={styles.input}
+              required
+            />
+          </div>
+          <div className={styles.inputContainer}>
+            <input
+              type="file"
+              name="profilePicture"
+              onChange={onChange}
+              className={styles.input}
+            />
+          </div>
+          <button type="submit" className={styles.button}>
+            Sign Up
+          </button>
+          {error && <p className={styles.error}>{error}</p>}
+        </form>
+        <div className={styles.orContainer}>
+          <div className={styles.line}></div>
+          <span className={styles.orText}>OR</span>
+          <div className={styles.line}></div>
         </div>
-        <div>
-          <label>Email:</label>
-          <input type="email" name="email" value={email} onChange={onChange} required />
-        </div>
-        <div>
-          <label>Password:</label>
-          <input type="password" name="password" value={password} onChange={onChange} required />
-        </div>
-        <div>
-          <label>Confirm Password:</label>
-          <input type="password" name="confirmPassword" value={confirmPassword} onChange={onChange} required />
-        </div>
-        <div>
-          <label>Profile Picture:</label>
-          <input type="file" name="profilePicture" onChange={onChange} />
-        </div>
-        <button type="submit">Sign Up</button>
-        {error && <p>{error}</p>}
-      </form>
+        <p className={styles.loginRedirect}>
+          Have an account?{' '}
+          <a href="/login" className={styles.loginLink}>
+            Log in
+          </a>
+        </p>
+      </div>
     </div>
   );
 };

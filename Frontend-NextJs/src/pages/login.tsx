@@ -2,6 +2,7 @@ import React, { useState, ChangeEvent, FormEvent } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 import { apiBaseUrl } from '../constants';
+import styles from '../styles/login.module.css'; // Import styles
 
 interface FormData {
   email: string;
@@ -28,13 +29,11 @@ const Login: React.FC = () => {
 
       const { username, token } = res.data;
 
-      // Set the token and username in localStorage
       localStorage.setItem('token', token);
       localStorage.setItem('username', username);
 
-      // Ensure that token is set before navigating
       if (localStorage.getItem('token')) {
-        router.push('/home'); // Navigate to home page
+        router.push('/home');
       } else {
         alert('Failed to set token. Please try again.');
       }
@@ -50,29 +49,49 @@ const Login: React.FC = () => {
   };
 
   return (
-    <form onSubmit={onSubmit}>
-      <div>
-        <label>Email:</label>
-        <input
-          type="email"
-          name="email"
-          value={email}
-          onChange={onChange}
-          required
-        />
+    <div className={styles.container}>
+      <div className={styles.formWrapper}>
+        <h1 className={styles.logo}>Link up</h1>
+        <form onSubmit={onSubmit} className={styles.form}>
+          <div className={styles.inputContainer}>
+            <input
+              type="email"
+              name="email"
+              value={email}
+              onChange={onChange}
+              placeholder="Email"
+              className={styles.input}
+              required
+            />
+          </div>
+          <div className={styles.inputContainer}>
+            <input
+              type="password"
+              name="password"
+              value={password}
+              onChange={onChange}
+              placeholder="Password"
+              className={styles.input}
+              required
+            />
+          </div>
+          <button type="submit" className={styles.button}>
+            Log In
+          </button>
+        </form>
+        <div className={styles.orContainer}>
+          <div className={styles.line}></div>
+          <span className={styles.orText}>OR</span>
+          <div className={styles.line}></div>
+        </div>
+        <p className={styles.signupText}>
+          Don't have an account?{' '}
+          <a href="/signup" className={styles.signupLink}>
+            Sign up
+          </a>
+        </p>
       </div>
-      <div>
-        <label>Password:</label>
-        <input
-          type="password"
-          name="password"
-          value={password}
-          onChange={onChange}
-          required
-        />
-      </div>
-      <button type="submit">Login</button>
-    </form>
+    </div>
   );
 };
 

@@ -260,9 +260,9 @@ import { faHeart as faHeartRegular } from '@fortawesome/free-regular-svg-icons';
             </div>
 
             <div className={styles.userPosts}>
-              <h3>{username}'s Posts</h3>
+            <hr />
               {posts.length === 0 ? (
-                <p>This user hasn't posted anything yet.</p>
+                <p className={styles.postEmpty}>This user hasn't posted anything yet.</p>
               ) : (
                 posts.map(post => (
                   <div

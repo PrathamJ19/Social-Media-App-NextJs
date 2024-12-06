@@ -54,7 +54,7 @@ const Sidebar: React.FC = () => {
             </Link>
           </li>
           <li>
-            <Link href="/videos" className={styles['sidebar-link']}>
+            <Link href="/stories" className={styles['sidebar-link']}>
               <FontAwesomeIcon icon={faVideo} className={styles.icon} />
               Stories
             </Link>
@@ -63,12 +63,6 @@ const Sidebar: React.FC = () => {
             <Link href="/messages" className={styles['sidebar-link']}>
               <FontAwesomeIcon icon={faEnvelope} className={styles.icon} />
               Messages
-            </Link>
-          </li>
-          <li>
-            <Link href="/events" className={styles['sidebar-link']}>
-              <FontAwesomeIcon icon={faCalendar} className={styles.icon} />
-              Events
             </Link>
           </li>
         </ul>
