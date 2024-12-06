@@ -19,12 +19,14 @@ const Notification: React.FC<NotificationProps> = ({ message, duration }) => {
     }
   }, [message, duration]);
 
+  if (!visible) {
+    return null; // Explicitly return null when not visible
+  }
+
   return (
-    visible && (
-      <div className="notification">
-        {message}
-      </div>
-    )
+    <div className="notification">
+      {message}
+    </div>
   );
 };
 
