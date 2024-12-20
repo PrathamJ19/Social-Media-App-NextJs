@@ -1,0 +1,72 @@
+/* messages.module.css */
+
+.container {
+  display: flex;
+  margin-top: 100px; /* Reserve space for the header */
+  height: calc(
+    99vh - 100px
+  ); /* Subtract the header's height from the viewport height */
+}
+
+.sidebar {
+  width: 30%;
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-right: 1px solid #ddd;
+  overflow-y: auto;
+}
+
+.sidebar h3 {
+  margin-bottom: 10px;
+}
+
+.userList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.userItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.userItem:hover {
+  background-color: #eaeaea;
+}
+
+.userProfilePicture {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.userUsername {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.chatContainer {
+  width: 70%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.noChatSelected {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  font-size: 18px;
+  color: #555;
+}
+
+.error {
+  color: red;
+}

@@ -1,0 +1,133 @@
+/* Existing styles */
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #fff;
+  border-radius: 0;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  height: 80px;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  margin-right: 10px;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+}
+
+.logog {
+  margin-right: 10px;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+}
+
+.app-name {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  cursor: pointer;
+}
+
+.search-bar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 500px;
+}
+
+.search-input {
+  flex-grow: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.search-button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 14px;
+  margin-left: 10px;
+}
+
+.suggestions-list {
+  position: absolute;
+  top: 100%; /* Position below the search bar */
+  left: 0;
+  width: 100%;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  max-height: 200px; /* Optional: Limit the height of suggestions */
+  overflow-y: auto; /* Add scroll if too many suggestions */
+  z-index: 1000; /* Ensure it's above other content */
+}
+
+.suggestion-item {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.suggestion-item:hover {
+  background-color: #f4f4f9;
+}
+
+.suggestion-profile-picture {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.username {
+  cursor: pointer;
+  font-size: 18px;
+  color: #007bff;
+}
+
+/* Mobile-specific styles */
+@media (max-width: 768px) {
+  .header {
+    padding: 10px;
+    height: auto;
+  }
+
+  .app-name {
+    display: none; /* Hide "LinkUp" text */
+  }
+
+  .search-bar {
+    width: 97%; /* Adjust search bar to take full width */
+  }
+
+  .search-button {
+    display: none; /* Hide the search button */
+  }
+
+  .hamburger-container {
+    display: flex;
+    align-items: center;
+  }
+}

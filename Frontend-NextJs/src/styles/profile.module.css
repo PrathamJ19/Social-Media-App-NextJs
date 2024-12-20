@@ -1,0 +1,304 @@
+/* profile.module.css */
+
+.profileContainer {
+  display: flex;
+  margin-top: 110px;
+}
+
+.profileContent {
+  display: flex;
+  align-items: flex-start; /* Align items at the start of the container */
+  gap: 20px;
+  width: 100%;
+  flex-wrap: wrap; /* Allow wrapping of content */
+}
+
+.profilePictureContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center the profile picture and username */
+  margin-bottom: 20px; /* Add space below profile picture */
+}
+
+.profilePicture2 {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #ddd; /* Optional border */
+  margin-left: 300px;
+}
+
+.username2 {
+  margin-top: 10px;
+  text-align: center;
+  margin-left: 300px;
+}
+
+.profileInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: 300px;
+  margin-top: 10px;
+  font-size: large;
+  font-weight: bold;
+}
+
+.profileStats {
+  display: flex;
+  justify-content: flex-start;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.profileStats div {
+  text-align: center;
+}
+
+.profileStats span {
+  display: block;
+  margin-right: 50px;
+}
+
+.profileActions {
+  display: flex;
+  flex-direction: column; /* Stack follow button and notification */
+  align-items: center;
+}
+
+.followButton {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  width: 250px;
+  margin-right: 35px;
+  margin-bottom: 10px; /* Space between button and notification */
+}
+
+.followButton:hover {
+  background-color: #0056b3;
+}
+
+/* Confirmation modal styles */
+.confirmationOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1001;
+}
+
+.confirmationModal {
+  background: white;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  z-index: 1002;
+}
+
+.confirmationModal button {
+  margin: 5px;
+  padding: 10px 20px;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.confirmationModal button:hover {
+  background-color: #0056b3;
+}
+
+/* Ensure the posts are placed below the user details */
+.userPosts {
+  width: 100%;
+  grid-column: 1 / -1; /* Span across the entire width */
+  margin-top: 20px;
+  margin-left: 280px;
+  margin-right: 280px;
+}
+
+.postEmpty {
+  margin-left: 10em;
+  margin: 4em;
+}
+
+.postsSection {
+  margin-top: 30px;
+}
+
+.postCard {
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+}
+
+.postHeader {
+  display: flex;
+  align-items: center;
+}
+
+.profilePicture {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 10px;
+}
+
+.postAuthor {
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.postContent {
+  margin: 10px 0;
+}
+
+.postImage {
+  width: 100%;
+  height: 500px;
+  border-radius: 5px;
+}
+
+.postActions {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+  gap: 5px; /* Add some space between the icon and the count */
+}
+
+.likeIcon {
+  cursor: pointer;
+  font-size: 24px;
+  color: #ff0000; /* Red color for the heart icon */
+}
+
+@media (max-width: 768px) {
+  .profileContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .profileHeader {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 20px;
+    width: 100%;
+    padding: 10px;
+  }
+
+  .profilePictureContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .profilePicture2 {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin-left: 10px;
+  }
+
+  .username2 {
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 5px;
+    margin-left: 20px;
+  }
+
+  .profileInfo {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 50px;
+    margin-top: 10px;
+    font-size: large;
+    font-weight: bold;
+  }
+
+  .profileStats {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 5px;
+  }
+
+  .profileStats div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+  }
+
+  .followButton {
+    margin-top: 10px;
+    padding: 8px 16px;
+    font-size: 14px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 10px;
+    width: 100%;
+  }
+
+  .followButton:hover {
+    background-color: #0056b3;
+  }
+
+  .userPosts {
+    width: 100%;
+    grid-column: 1 / -1; /* Span across the entire width */
+    margin-top: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+
+  .postCard {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #fff;
+    margin-right: 0;
+  }
+
+  .postImage {
+    width: 100%;
+    height: auto;
+    margin-top: 10px;
+    border-radius: 5px;
+  }
+
+  .postActions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    font-size: 14px;
+  }
+
+  .likeIcon {
+    font-size: 20px;
+    cursor: pointer;
+  }
+}
