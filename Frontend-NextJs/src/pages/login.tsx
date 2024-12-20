@@ -33,7 +33,7 @@ const Login: React.FC = () => {
       localStorage.setItem('username', username);
 
       if (localStorage.getItem('token')) {
-        router.push('/home');
+        window.location.href = '/home';
       } else {
         alert('Failed to set token. Please try again.');
       }
